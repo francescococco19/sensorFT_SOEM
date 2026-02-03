@@ -1,0 +1,43 @@
+<launch>
+  <arg name="iface"     default="enx207bd51ab7ad" />
+  <arg name="frame_id"  default="ft_sensor" />
+  <arg name="topic"     default="/ft_sensor/wrench" />
+  <arg name="rate_hz"   default="50" />
+
+  <!-- Improved automatic tare: warm-up + stability gate + outlier rejection -->
+  <arg name="warmup_seconds"                 default="15" />
+  <arg name="stability_samples"              default="50" />
+  <arg name="stability_period_ms"            default="20" />
+  <arg name="stability_force_std_thresh_N"   default="0.05" />
+  <arg name="stability_torque_std_thresh_Nm" default="0.005" />
+  <arg name="stability_max_wait_s"           default="60.0" />
+  <arg name="tare_samples"                   default="300" />
+  <arg name="tare_period_ms"                 default="20" />
+  <arg name="tare_outlier_k_sigma"           default="3.0" />
+
+  <arg name="require_single_slave" default="true" />
+
+  <node pkg="ft_sensor_ros"
+        type="sensorFT_publisher"
+        name="sensorFT_publisher"
+        output="screen">
+
+    <param name="iface"               value="$(arg iface)" />
+    <param name="frame_id"            value="$(arg frame_id)" />
+    <param name="topic"               value="$(arg topic)" />
+    <param name="rate_hz"             value="$(arg rate_hz)" />
+
+    <param name="require_single_slave" value="$(arg require_single_slave)" />
+
+    <param name="warmup_seconds"                  value="$(arg warmup_seconds)" />
+    <param name="stability_samples"               value="$(arg stability_samples)" />
+    <param name="stability_period_ms"             value="$(arg stability_period_ms)" />
+    <param name="stability_force_std_thresh_N"    value="$(arg stability_force_std_thresh_N)" />
+    <param name="stability_torque_std_thresh_Nm"  value="$(arg stability_torque_std_thresh_Nm)" />
+    <param name="stability_max_wait_s"            value="$(arg stability_max_wait_s)" />
+
+    <param name="tare_samples"          value="$(arg tare_samples)" />
+    <param name="tare_period_ms"        value="$(arg tare_period_ms)" />
+    <param name="tare_outlier_k_sigma"  value="$(arg tare_outlier_k_sigma)" />
+  </node>
+</launch>
